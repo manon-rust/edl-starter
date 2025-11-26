@@ -234,7 +234,31 @@ async def update_task(task_id: int, updates: TaskUpdate) -> Task:
     Indice: Regardez comment create_task fonctionne pour vous inspirer
     """
     # TODO: Votre code ici
-    raise HTTPException(status_code=501, detail="Update not implemented yet - complete this function!")
+    if task_id not in tasks_db:
+        raise HTTPException(status_code=404, detail=f"Task {task_id} not found")
+
+    task = tasks_db[task_id]
+
+    update = updates.model_dump(exclude_unset=True)
+
+    if "title" in update and not update["title"].strip():
+        raise HTTPException(status_code=422, detail="Title cannot be empty")
+
+    updated_task = Task(
+        id=task_id,
+        title=update.get("title", task.title),
+        description=update.get("description", task.description),
+        status=update.get("status", task.status),
+        priority=update.get("priority", task.priority),
+        assignee=update.get("assignee", task.assignee),
+        due_date=update.get("due_date", task.due_date),
+        created_at=task.created_at,
+        updated_at=datetime.utcnow()
+    )
+
+    tasks_db[task_id] = updated_task
+
+    return updated_task
 
 
 @app.delete("/tasks/{task_id}", status_code=204)
@@ -256,7 +280,14 @@ async def delete_task(task_id: int):
     Indice: C'est très simple, seulement 3 lignes de code !
     """
     # TODO: Votre code ici
-    raise HTTPException(status_code=501, detail="Delete not implemented yet - complete this function!")
+    if task_id not in tasks_db:
+        raise HTTPException(status_code=404, detail=f"Task {task_id} not found")
+
+    del tasks_db[task_id]
+
+    logger.info(f"Task deleted successfully: {task_id}")
+
+    return None
 
 
 if __name__ == "__main__":

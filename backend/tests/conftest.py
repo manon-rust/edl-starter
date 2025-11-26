@@ -3,11 +3,15 @@ from fastapi.testclient import TestClient
 from src.app import app, clear_tasks
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture(autouse=True) #autouse=True → cette fixture s’exécute automatiquement pour tous les tests
 def clean_tasks():
     """
     Clear all tasks before each test.
     This ensures tests don't interfere with each other.
+
+    yield :
+    Ici, tout ce qui est avant yield s’exécute avant le test
+    Tout ce qui est après yield s’exécute après le test (cleanup).
     """
     clear_tasks()
     yield
