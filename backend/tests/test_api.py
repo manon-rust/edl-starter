@@ -294,49 +294,6 @@ def test_filter_by_multiple_criteria(client):
 # EXERCICES BONUS (Si vous finissez en avance !)
 # =============================================================================
 
-# BONUS 1 : Tester le filtrage par statut
-def test_filter_tasks_by_status(client):
-    """
-    BONUS : Tester le filtrage des tâches par statut.
-
-    Étapes :
-    1. Créer 2 tâches : une avec status="todo", une avec status="done"
-    2. Obtenir les tâches avec le filtre : client.get("/tasks?status=done")
-    3. Vérifier que seule la tâche "done" est retournée
-    """
-    # TODO : Écrivez votre test ici !
-    pass
-
-
-# BONUS 2 : Tester la mise à jour d'un seul champ
-def test_update_only_status(client):
-    """
-    BONUS : Tester que mettre à jour seulement le statut ne change pas les autres champs.
-
-    Étapes :
-    1. Créer une tâche avec title="Test" et status="todo"
-    2. Mettre à jour seulement le statut à "done"
-    3. Vérifier que le statut a changé MAIS le titre est resté le même
-    """
-    # TODO : Écrivez votre test ici !
-    pass
-
-
-# BONUS 3 : Tester le cycle de vie complet d'une tâche
-def test_task_lifecycle(client):
-    """
-    BONUS : Tester le cycle de vie complet : Créer → Lire → Mettre à jour → Supprimer
-
-    Étapes :
-    1. Créer une tâche
-    2. La lire (GET par ID)
-    3. La mettre à jour (changer le statut à "done")
-    4. La supprimer
-    5. Vérifier qu'elle a disparu (GET devrait retourner 404)
-    """
-    # TODO : Écrivez votre test ici !
-    pass
-
 def test_health_check(client):
  response = client.get("/health")
  assert response.status_code == 200
