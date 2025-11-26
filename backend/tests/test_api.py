@@ -340,7 +340,7 @@ def test_task_lifecycle(client):
 def test_health_check(client):
  response = client.get("/health")
  assert response.status_code == 200
- assert response.json()["status"] == "BROKEN"  #Faux exprès !
+assert response.json()["status"] == "healthy"
 
 # =============================================================================
 # ASTUCES & CONSEILS
